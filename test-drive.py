@@ -7,5 +7,9 @@ while True:
     x = car.controller.get_channel(car.controller.RIGHT_X)
     y = car.controller.get_channel(car.controller.RIGHT_Y)
 
-    print(x, y)
+    left = x + y
+    right = x - y
+
+    car.drive.set_speed(left, right)
+
     time.sleep(0.05)

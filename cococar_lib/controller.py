@@ -1,10 +1,6 @@
 import pigpio
 
 
-def _clamp(value, min_val, max_val):
-    return max(min(value, max_val), min_val)
-
-
 def _us_to_ratio(us, min_us, max_us):
     return max(min((us - min_us) / (max_us - min_us), 1), 0)
 
