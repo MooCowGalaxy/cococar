@@ -9,4 +9,4 @@ def get_marker_distance(points):
     side = line_length(points[0], points[1])
 
     distance = 1 / side
-    return distance * 1500 / 2.54  # conversion factor to inches
+    return distance * 3420  # conversion factor to inches
