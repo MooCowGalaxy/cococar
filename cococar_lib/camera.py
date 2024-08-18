@@ -26,7 +26,7 @@ class Camera:
 
         # Convert the frame to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        gray = cv2.resize(gray, dsize=(640, 360))
+        # gray = cv2.resize(gray, dsize=(640, 360))
 
         # Detect the markers
         corners, ids, rejected = self.aruco_detector.detectMarkers(gray)
