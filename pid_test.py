@@ -25,7 +25,7 @@ def update():
 
     if len(markers) == 0:
         if no_detection_count == 10:
-            car.drive.set_speed(0, 0)
+            car.set_drive(0, 0)
             speed = 0
             angle = 0
         speed *= 0.9
