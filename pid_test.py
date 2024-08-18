@@ -8,7 +8,7 @@ position_setpoint = 320
 
 
 def x_midpoint(a, b):
-    return (a[1] + b[1]) / 2
+    return (a[0] + b[0]) / 2
 
 
 while True:
