@@ -35,7 +35,7 @@ class Drive:
         self._pi.set_servo_pulsewidth(self._left_pin, _speed_to_pulsewidth(left_clamped, self._min_us, self._max_us) + left_offset)
         self._pi.set_servo_pulsewidth(self._right_pin, _speed_to_pulsewidth(right_clamped, self._min_us, self._max_us) + right_offset)
 
-    def drive(self, speed, angle):
-        left = angle + speed
-        right = angle - speed
+    def drive(self, speed, angle, max_speed=1):
+        left = clamp(angle + speed, -max_speed, max_speed)
+        right = clamp(angle - speed, -max_speed, max_speed)
         self.set_speed(left, right)
