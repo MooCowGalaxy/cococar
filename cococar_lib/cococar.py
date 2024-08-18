@@ -10,8 +10,8 @@ ENCODER_PINS = [
     [24, 23]   # right pins
 ]
 
-MIN_US = 1020
-MAX_US = 2030
+MIN_US = 1050
+MAX_US = 1950
 
 LEFT_OFFSET = -40
 RIGHT_OFFSET = 0
