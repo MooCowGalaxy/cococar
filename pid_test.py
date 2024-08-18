@@ -37,7 +37,7 @@ while True:
         speed += speed_pid.get_output(distance_error)
         speed = clamp(speed, -max_output, max_output)
         angle_output = clamp(angle_pid.get_output(position_error), -max_output, max_output)
-        print(speed, angle_output)
+        print(speed, angle_output, markers[0]['distance'])
         car.drive.drive(speed, angle_output, max_output)
 
     time.sleep(0.1)
