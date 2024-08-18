@@ -47,6 +47,7 @@ class CocoCar:
             if state != self.state.value:
                 if state == CarState.STOPPED.value:
                     self.state = CarState.STOPPED
+                    self._drive.set_speed(0, 0)
                 elif state == CarState.MANUAL.value:
                     self.state = CarState.MANUAL
                 elif state == CarState.AUTO.value:
