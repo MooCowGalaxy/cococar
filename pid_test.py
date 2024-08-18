@@ -27,7 +27,7 @@ while True:
         col_position = x_midpoint(corners[0], corners[1])
         position_error = -(col_position - position_setpoint)
         output = clamp(pid.get_output(position_error), -max_output, max_output)
-        print(col_position, position_error, output)
+        print(output, markers[0]['distance'])
         car.drive.drive(0, output)
 
     time.sleep(0.1)
