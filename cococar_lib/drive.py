@@ -1,5 +1,5 @@
 import pigpio
-import random
+# import random
 from .utils import clamp
 
 
@@ -28,7 +28,8 @@ class Drive:
         left_clamped = clamp(left_speed, -1, 1)
         right_clamped = clamp(right_speed, -1, 1)
 
-        left_offset = self._left_offset + (1 if random.randint(0, 10) > 4 else 0)
+        # left_offset = self._left_offset + (1 if random.randint(0, 10) > 4 else 0)
+        left_offset = self._left_offset
         right_offset = self._right_offset
 
         self._pi.set_servo_pulsewidth(self._left_pin, _speed_to_pulsewidth(left_clamped, self._min_us, self._max_us) + left_offset)
