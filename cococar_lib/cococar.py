@@ -19,6 +19,7 @@ MAX_US = 1950
 
 LEFT_OFFSET = 0
 RIGHT_OFFSET = 0
+TURN_FACTOR = 0.8
 
 
 class CarState(Enum):
@@ -54,6 +55,15 @@ class CocoCar:
 
             if self._update_callback is not None:
                 self._update_callback()
+
+            if self.state == CarState.MANUAL:
+                x = self.controller.get_channel(self.controller.RIGHT_X) * TURN_FACTOR
+                y = self.controller.get_channel(self.controller.RIGHT_Y)
+
+                left = x + y
+                right = x - y
+
+                self._drive.set_speed(left, right)
 
             time.sleep(delay)
 
