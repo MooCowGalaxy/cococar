@@ -1,6 +1,7 @@
 from .encoder import QuadratureEncoder
 from .controller import Controller
 from .drive import Drive
+from .camera import Camera
 import pigpio
 
 CONTROLLER_INPUT_PINS = [11, 5, 6, 16, 20, 21]
@@ -24,3 +25,4 @@ class CocoCar:
         self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
         self.controller = Controller(self.pi, CONTROLLER_INPUT_PINS, MIN_US, MAX_US)
         self.drive = Drive(self.pi, MOTOR_PINS[0], MOTOR_PINS[1], MIN_US, MAX_US, LEFT_OFFSET, RIGHT_OFFSET)
+        self.camera = Camera()
