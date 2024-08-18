@@ -38,6 +38,6 @@ while True:
         speed = clamp(speed, -max_output, max_output)
         angle_output = clamp(angle_pid.get_output(position_error), -max_output, max_output)
         print(speed, angle_output)
-        car.drive.drive(0, angle_output, max_output)
+        car.drive.drive(speed, angle_output, max_output)
 
     time.sleep(0.1)
