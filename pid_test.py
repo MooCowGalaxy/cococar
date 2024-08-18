@@ -4,8 +4,8 @@ import time
 
 car = CocoCar()
 speed_pid = PIDController(0.0036, 0, 0.01)
-angle_pid = PIDController(0.0009, 0, 0.0002)
-max_output = 0.25
+angle_pid = PIDController(0.0007, 0, 0.0003)
+max_output = 0.4
 position_setpoint = 320
 distance_setpoint = 40
 
