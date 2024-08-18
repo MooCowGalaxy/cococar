@@ -3,9 +3,9 @@ from cococar_lib import CocoCar
 import time
 
 car = CocoCar()
-pid = PIDController(0.0005, 0, 0)
-max_output = 0.2
-position_setpoint = 640
+pid = PIDController(0.001, 0, 0)
+max_output = 0.25
+position_setpoint = 320
 
 
 def x_midpoint(a, b):
@@ -27,7 +27,7 @@ while True:
         col_position = x_midpoint(corners[0], corners[1])
         position_error = -(col_position - position_setpoint)
         output = clamp(pid.get_output(position_error), -max_output, max_output)
-        print(position_error, output)
+        print(col_position, position_error, output)
         car.drive.drive(0, output)
 
     time.sleep(0.1)
