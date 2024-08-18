@@ -4,6 +4,7 @@ import time
 
 car = CocoCar()
 pid = PIDController(0.1, 0, 0)
+position_setpoint = 320
 
 
 def x_midpoint(a, b):
@@ -18,6 +19,7 @@ while True:
     else:
         corners = markers[0]['corners']
         col_position = x_midpoint(corners[0], corners[1])
-        print(corners)
+        position_error = col_position - position_setpoint
+        print(position_error)
 
     time.sleep(0.05)
