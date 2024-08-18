@@ -20,6 +20,8 @@ while True:
         corners = markers[0]['corners']
         col_position = x_midpoint(corners[0], corners[1])
         position_error = col_position - position_setpoint
-        print(position_error)
+        print(corners)
+        print(col_position, position_error)
+        print()
 
-    time.sleep(0.05)
+    time.sleep(0.1)
