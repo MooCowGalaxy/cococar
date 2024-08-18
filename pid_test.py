@@ -1,4 +1,4 @@
-from cococar_lib.utils import PIDController
+from cococar_lib.utils import PIDController, clamp
 from cococar_lib import CocoCar
 import time
 
@@ -26,10 +26,8 @@ while True:
         corners = markers[0]['corners']
         col_position = x_midpoint(corners[0], corners[1])
         position_error = -(col_position - position_setpoint)
-        output = pid.get_output(position_error)
-        if output > max_output:
-            output = max_output
-        print(output)
+        output = clamp(pid.get_output(position_error), -max_output, max_output)
+        print(position_error, output)
         car.drive.drive(0, output)
 
     time.sleep(0.1)
