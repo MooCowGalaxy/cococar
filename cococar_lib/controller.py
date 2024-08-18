@@ -46,7 +46,7 @@ class Controller:
         if channel in [self.LEFT_X, self.RIGHT_X, self.RIGHT_Y]:
             value = -_ratio_to_speed(value)
 
-        if abs(value) < 0.02:  # remove noise
+        if abs(value) < 0.025:  # remove noise
             value = 0
 
         return value

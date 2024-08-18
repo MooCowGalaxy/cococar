@@ -3,8 +3,10 @@ import time
 
 car = CocoCar()
 
+TURN_FACTOR = 0.6
+
 while True:
-    x = car.controller.get_channel(car.controller.RIGHT_X)
+    x = car.controller.get_channel(car.controller.RIGHT_X) * TURN_FACTOR
     y = car.controller.get_channel(car.controller.RIGHT_Y)
 
     left = x + y
