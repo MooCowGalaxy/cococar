@@ -42,7 +42,7 @@ class CocoCar:
         self._update_callback = update_callback
 
         while True:
-            state = round(self.controller.get_channel(5))
+            state = round(self.controller.get_channel(5) * 2)
             if state != self.state.value:
                 if state == CarState.STOPPED.value:
                     self.state = CarState.STOPPED
