@@ -30,7 +30,7 @@ def update():
             angle = 0
         speed *= 0.9
         angle *= 0.9
-        car.drive.drive(speed, angle, max_output)
+        car.set_drive(speed, angle, max_output)
         speed_pid.get_output(0)
         angle_pid.get_output(0)  # so that derivative is also updating
         no_detection_count += 1
