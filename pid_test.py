@@ -3,7 +3,7 @@ from cococar_lib import CocoCar
 import time
 
 car = CocoCar()
-pid = PIDController(0.1, 0, 0)
+pid = PIDController(0.00175, 0, 0)
 position_setpoint = 320
 
 
@@ -16,12 +16,11 @@ while True:
 
     if len(markers) == 0:
         car.drive.set_speed(0, 0)
+        print(pid.get_output(0))  # so that derivative is also updating
     else:
         corners = markers[0]['corners']
         col_position = x_midpoint(corners[0], corners[1])
         position_error = col_position - position_setpoint
-        print(corners)
-        print(col_position, position_error)
-        print()
+        print(pid.get_output(position_error))
 
     time.sleep(0.1)
