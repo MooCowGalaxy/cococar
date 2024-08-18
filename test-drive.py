@@ -10,6 +10,8 @@ while True:
     left = x + y
     right = x - y
 
+    print(f'x: {x:.3f}, y: {y:.3f}, left: {left:.3f}, right: {right:.3f}')
+
     car.drive.set_speed(left, right)
 
     time.sleep(0.05)
