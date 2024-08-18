@@ -11,13 +11,17 @@ def x_midpoint(a, b):
     return (a[0] + b[0]) / 2
 
 
+no_detection_count = 0
 while True:
     markers = car.camera.detect_aruco_markers()
 
     if len(markers) == 0:
-        car.drive.set_speed(0, 0)
+        if no_detection_count == 10:
+            car.drive.set_speed(0, 0)
         print(pid.get_output(0))  # so that derivative is also updating
+        no_detection_count += 1
     else:
+        no_detection_count = 0
         corners = markers[0]['corners']
         col_position = x_midpoint(corners[0], corners[1])
         position_error = -(col_position - position_setpoint)
