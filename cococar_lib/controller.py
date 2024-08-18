@@ -46,6 +46,11 @@ class Controller:
             return 0
 
         value = self._channel_values[self._input_pins[channel - 1]]
+
         if channel in [self.LEFT_X, self.RIGHT_X, self.RIGHT_Y]:
-            return _ratio_to_speed(value)
+            value = _ratio_to_speed(value)
+
+        if abs(value) < 0.02:  # remove noise
+            value = 0
+
         return value
