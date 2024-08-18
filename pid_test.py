@@ -1,6 +1,5 @@
 from cococar_lib.utils import PIDController, clamp
 from cococar_lib import CocoCar
-import time
 
 car = CocoCar()
 speed_pid = PIDController(0.002, 0, 0.02)
@@ -17,7 +16,11 @@ def x_midpoint(a, b):
 speed = 0
 angle = 0
 no_detection_count = 0
-while True:
+
+
+def update():
+    global speed, angle, no_detection_count
+
     markers = car.camera.detect_aruco_markers()
 
     if len(markers) == 0:
@@ -46,6 +49,7 @@ while True:
         speed = clamp(speed, -max_output, max_output)
         angle = clamp(angle_pid.get_output(position_error), -max_output, max_output)
         print(speed, angle, markers[0]['distance'])
-        car.drive.drive(speed, angle, max_output)
+        car.set_drive(speed, angle, max_output)
 
-    time.sleep(0.08)
+
+car.set_update_callback(update)

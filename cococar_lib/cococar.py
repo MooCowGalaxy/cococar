@@ -33,13 +33,13 @@ class CocoCar:
         self.left_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[0][0], pin_B=ENCODER_PINS[0][1])
         self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
         self.controller = Controller(self.pi, CONTROLLER_INPUT_PINS, MIN_US, MAX_US)
-        self.drive = Drive(self.pi, MOTOR_PINS[0], MOTOR_PINS[1], MIN_US, MAX_US, LEFT_OFFSET, RIGHT_OFFSET)
+        self._drive = Drive(self.pi, MOTOR_PINS[0], MOTOR_PINS[1], MIN_US, MAX_US, LEFT_OFFSET, RIGHT_OFFSET)
         self.camera = Camera()
         self.state = CarState.STOPPED
-        self.update_callback = None
+        self._update_callback = None
 
     def set_update_callback(self, update_callback, delay=0.05):
-        self.update_callback = update_callback
+        self._update_callback = update_callback
 
         while True:
             state = round(self.controller.get_channel(5))
@@ -52,8 +52,8 @@ class CocoCar:
                     self.state = CarState.AUTO
                 print(f'Switched state to {self.state.name}')
 
-            if self.update_callback is not None:
-                self.update_callback()
+            if self._update_callback is not None:
+                self._update_callback()
 
             time.sleep(delay)
 
@@ -64,4 +64,4 @@ class CocoCar:
         speed = -speed
         left = clamp(angle + speed, -max_speed, max_speed)
         right = clamp(angle - speed, -max_speed, max_speed)
-        self.drive.set_speed(left, right)
+        self._drive.set_speed(left, right)
