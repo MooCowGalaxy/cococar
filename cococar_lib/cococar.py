@@ -19,7 +19,8 @@ MAX_US = 1950
 
 LEFT_OFFSET = 0
 RIGHT_OFFSET = 0
-TURN_FACTOR = 0.8
+DEFAULT_TURN_FACTOR = 0.8
+DEFAULT_MAX_SPEED = 0.75
 
 
 class CarState(Enum):
@@ -29,14 +30,16 @@ class CarState(Enum):
 
 
 class CocoCar:
-    def __init__(self):
+    def __init__(self, turn_factor=DEFAULT_TURN_FACTOR, max_speed=DEFAULT_MAX_SPEED):
         self.pi = pigpio.pi()
         self.left_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[0][0], pin_B=ENCODER_PINS[0][1])
         self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
         self.controller = Controller(self.pi, CONTROLLER_INPUT_PINS, MIN_US, MAX_US)
-        self._drive = Drive(self.pi, MOTOR_PINS[0], MOTOR_PINS[1], MIN_US, MAX_US, LEFT_OFFSET, RIGHT_OFFSET)
+        self._drive = Drive(self.pi, MOTOR_PINS[0], MOTOR_PINS[1], MIN_US, MAX_US, LEFT_OFFSET, RIGHT_OFFSET, max_speed)
         self.camera = Camera()
         self.state = CarState.STOPPED
+        self.turn_factor = turn_factor
+        self.max_speed = max_speed
         self._update_callback = None
 
     def set_update_callback(self, update_callback, delay=0.05):
@@ -58,8 +61,8 @@ class CocoCar:
                 self._update_callback()
 
             if self.state == CarState.MANUAL:
-                x = self.controller.get_channel(self.controller.RIGHT_X) * TURN_FACTOR
-                y = self.controller.get_channel(self.controller.RIGHT_Y)
+                x = self.controller.get_channel(self.controller.RIGHT_X) * self.turn_factor
+                y = self.controller.get_channel(self.controller.RIGHT_Y) * self.max_speed
 
                 left = x + y
                 right = x - y
@@ -68,9 +71,12 @@ class CocoCar:
 
             time.sleep(delay)
 
-    def set_drive(self, speed, angle, max_speed=1):
+    def set_drive(self, speed, angle, max_speed=None):
         if self.state != CarState.AUTO:
             return
+
+        if max_speed is None:
+            max_speed = self.max_speed
 
         speed = -speed
         left = clamp(angle + speed, -max_speed, max_speed)
