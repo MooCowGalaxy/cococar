@@ -31,6 +31,8 @@ class Controller:
         if level == 0 and self._start_time[gpio] is not None:
             # gpio went from 1 to 0
             us = tick - self._start_time[gpio]
+            if gpio == self._input_pins[0]:
+                pass # print(us)
             self._channel_values[gpio] = _us_to_ratio(us, self._min_us, self._max_us)
             self._start_time[gpio] = None
 

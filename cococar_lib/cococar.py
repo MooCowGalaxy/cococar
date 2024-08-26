@@ -19,8 +19,8 @@ MAX_US = 1950
 
 LEFT_OFFSET = 0
 RIGHT_OFFSET = 0
-DEFAULT_TURN_FACTOR = 0.8
-DEFAULT_MAX_SPEED = 0.75
+DEFAULT_TURN_FACTOR = 0.5
+DEFAULT_MAX_SPEED = 0.6
 
 
 class CarState(Enum):
@@ -78,7 +78,7 @@ class CocoCar:
         if max_speed is None:
             max_speed = self.max_speed
 
-        speed = -speed
+        # speed = -speed
         left = clamp(angle + speed, -max_speed, max_speed)
         right = clamp(angle - speed, -max_speed, max_speed)
         self._drive.set_speed(left, right)
