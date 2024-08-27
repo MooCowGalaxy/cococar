@@ -1,5 +1,4 @@
 import pigpio
-# import random
 from .utils import clamp
 
 
@@ -8,16 +7,13 @@ def _speed_to_pulsewidth(speed, min_us, max_us):
     return round(min_us + (max_us - min_us) * ratio)
 
 
-class Drive:
-    def __init__(self, pi, left_pin, right_pin, min_us, max_us, left_offset=0, right_offset=0, wheel_diameter=3.75, max_speed=0.8):
+class RawDrive:
+    def __init__(self, pi, left_pin, right_pin, min_us, max_us, max_speed=0.8):
         self._pi = pi
         self._left_pin = left_pin
         self._right_pin = right_pin
         self._min_us = min_us
         self._max_us = max_us
-        self._left_offset = left_offset
-        self._right_offset = right_offset
-        self._wheel_diameter = wheel_diameter
         self._max_speed = max_speed
 
         for output_pin in [left_pin, right_pin]:
@@ -29,9 +25,5 @@ class Drive:
         left_clamped = clamp(left_speed, -self._max_speed, self._max_speed)
         right_clamped = clamp(right_speed, -self._max_speed, self._max_speed)
 
-        # left_offset = self._left_offset + (1 if random.randint(0, 10) > 4 else 0)
-        left_offset = self._left_offset
-        right_offset = self._right_offset
-
-        self._pi.set_servo_pulsewidth(self._left_pin, _speed_to_pulsewidth(left_clamped, self._min_us, self._max_us) + left_offset)
-        self._pi.set_servo_pulsewidth(self._right_pin, _speed_to_pulsewidth(right_clamped, self._min_us, self._max_us) + right_offset)
+        self._pi.set_servo_pulsewidth(self._left_pin, _speed_to_pulsewidth(left_clamped, self._min_us, self._max_us))
+        self._pi.set_servo_pulsewidth(self._right_pin, _speed_to_pulsewidth(right_clamped, self._min_us, self._max_us))

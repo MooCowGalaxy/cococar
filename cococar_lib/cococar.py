@@ -1,6 +1,6 @@
 from .encoder import QuadratureEncoder
 from .controller import Controller
-from .drive import Drive
+from .drive_client import DriveClient
 from .camera import Camera
 from .utils import clamp
 from enum import Enum
@@ -20,7 +20,7 @@ MAX_US = 1950
 LEFT_OFFSET = 0
 RIGHT_OFFSET = 0
 DEFAULT_TURN_FACTOR = 0.5
-DEFAULT_MAX_SPEED = 0.6
+DEFAULT_MAX_SPEED = 1
 
 
 class CarState(Enum):
@@ -35,7 +35,7 @@ class CocoCar:
         self.left_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[0][0], pin_B=ENCODER_PINS[0][1])
         self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
         self.controller = Controller(self.pi, CONTROLLER_INPUT_PINS, MIN_US, MAX_US)
-        self._drive = Drive(self.pi, MOTOR_PINS[0], MOTOR_PINS[1], MIN_US, MAX_US, LEFT_OFFSET, RIGHT_OFFSET, max_speed)
+        self._drive = DriveClient(max_speed)
         self.camera = Camera()
         self.state = CarState.STOPPED
         self.turn_factor = turn_factor
