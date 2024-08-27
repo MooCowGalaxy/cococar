@@ -2,11 +2,11 @@ from cococar_lib.utils import PIDController, clamp
 from cococar_lib import CocoCar
 
 car = CocoCar()
-speed_pid = PIDController(0.002, 0, 0.02)
-angle_pid = PIDController(0.0006, 0, 0.0003)
-max_output = 0.7
+speed_pid = PIDController(0.0002, 0, 0.001)
+angle_pid = PIDController(0.00034, 0, 0.0002)
+max_output = 0.4
 position_setpoint = 320
-distance_setpoint = 40
+distance_setpoint = 35
 
 
 def x_midpoint(a, b):
@@ -24,13 +24,13 @@ def update():
     markers = car.camera.detect_aruco_markers()
 
     if len(markers) == 0:
-        if no_detection_count == 10:
+        if no_detection_count == 20:
             car.set_drive(0, 0)
             speed = 0
             angle = 0
-        speed *= 0.9
-        angle *= 0.9
-        car.set_drive(speed, angle, max_output)
+        speed *= 0.95
+        angle *= 0.95
+        car.set_drive(-speed, angle, max_output)
         speed_pid.get_output(0)
         angle_pid.get_output(0)  # so that derivative is also updating
         no_detection_count += 1
@@ -48,8 +48,8 @@ def update():
         speed += delta_speed
         speed = clamp(speed, -max_output, max_output)
         angle = clamp(angle_pid.get_output(position_error), -max_output, max_output)
-        print(speed, angle, markers[0]['distance'])
-        car.set_drive(speed, angle, max_output)
+        print(-speed, angle, markers[0]['distance'])
+        car.set_drive(-speed, angle, max_output)
 
 
 car.set_update_callback(update)
