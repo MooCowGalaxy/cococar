@@ -1,4 +1,4 @@
-from clamp import clamp
+from .clamp import clamp
 
 
 def remap_range(val, old_min, old_max, new_min, new_max, limit=True):
