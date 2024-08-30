@@ -5,7 +5,7 @@ car = CocoCar()
 
 speed_average = RollingAverage(10)
 
-MAX_SPEED = 0.2
+MAX_SPEED = 0.4
 STOPPING_DISTANCE = 50  # cm
 
 
