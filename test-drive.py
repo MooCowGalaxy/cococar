@@ -1,13 +1,12 @@
 from cococar_lib import CocoCar
+from cococar_lib.utils import RollingAverage
 
 car = CocoCar()
 
 TURN_FACTOR = 0.6
 
-average_x = []
-average_y = []
-DATA_POINTS_X = 6
-DATA_POINTS_Y = 12
+average_x = RollingAverage(6)
+average_y = RollingAverage(12)
 
 
 def update():
@@ -16,15 +15,11 @@ def update():
     x = car.controller.get_channel(car.controller.RIGHT_X) * TURN_FACTOR
     y = car.controller.get_channel(car.controller.RIGHT_Y)
 
-    average_x.append(x)
-    average_y.append(y)
-    if len(average_x) > DATA_POINTS_X:
-        average_x = average_x[-DATA_POINTS_X:]
-    if len(average_y) > DATA_POINTS_Y:
-        average_y = average_y[-DATA_POINTS_Y:]
+    average_x.add_point(x)
+    average_y.add_point(y)
 
-    average_x_values = sum(average_x) / len(average_x)
-    average_y_values = sum(average_y) / len(average_y)
+    average_x_values = average_x.get_average()
+    average_y_values = average_y.get_average()
 
     # print(f'x: {x:.3f}, y: {y:.3f}')
 

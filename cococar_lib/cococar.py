@@ -80,7 +80,7 @@ class CocoCar:
 
             time.sleep(delay)
 
-    def set_drive(self, speed, angle, max_speed=None):
+    def set_drive(self, speed, turn, max_speed=None):
         if self.state != CarState.AUTO:
             return
 
@@ -88,6 +88,6 @@ class CocoCar:
             max_speed = self.max_speed
 
         # speed = -speed
-        left = clamp(angle + speed, -max_speed, max_speed)
-        right = clamp(angle - speed, -max_speed, max_speed)
+        left = clamp(turn + speed, -max_speed, max_speed)
+        right = clamp(turn - speed, -max_speed, max_speed)
         self._drive.set_speed(left, right)
