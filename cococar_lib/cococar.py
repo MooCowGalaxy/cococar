@@ -1,7 +1,8 @@
-from .encoder import QuadratureEncoder
+from .camera import Camera
 from .controller import Controller
 from .drive_client import DriveClient
-from .camera import Camera
+from .encoder import QuadratureEncoder
+from .ultrasonic import UltrasonicSensor
 from .utils import clamp
 from enum import Enum
 import pigpio
@@ -13,6 +14,7 @@ ENCODER_PINS = [
     [15, 14],  # left pins
     [24, 23]   # right pins
 ]
+ULTRASONIC_PINS = [27, 17]
 
 MIN_US = 1050
 MAX_US = 1950
@@ -35,7 +37,14 @@ class CocoCar:
         self.left_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[0][0], pin_B=ENCODER_PINS[0][1])
         self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
         self.controller = Controller(self.pi, CONTROLLER_INPUT_PINS, MIN_US, MAX_US)
+        self.ultrasonic = UltrasonicSensor(ULTRASONIC_PINS[0], ULTRASONIC_PINS[1])
+
+        print(f'Connecting to drive server...')
         self._drive = DriveClient(max_speed)
+        self._drive.connect()
+        self._drive.set_speed(0, 0)
+        print(f'--------------------------------------------------------')
+
         self.camera = Camera()
         self.state = CarState.STOPPED
         self.turn_factor = turn_factor

@@ -9,6 +9,7 @@ average_y = []
 DATA_POINTS_X = 6
 DATA_POINTS_Y = 12
 
+
 def update():
     global average_x, average_y
 
