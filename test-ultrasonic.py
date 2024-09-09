@@ -19,6 +19,8 @@ def update():
     speed_average.add_point(speed)
     average = speed_average.get_average()
 
+    print(average)
+
     car.set_drive(average, 0)
 
 
