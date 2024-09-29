@@ -2,11 +2,11 @@ from cococar_lib.utils import PIDController, clamp
 from cococar_lib import CocoCar
 
 car = CocoCar()
-speed_pid = PIDController(0.0003, 0, 0.001)
+speed_pid = PIDController(0.0004, 0, 0.001)
 angle_pid = PIDController(0.0004, 0, 0.0002)
-max_output = 0.5
+max_output = 0.8
 position_setpoint = 320
-distance_setpoint = 35
+distance_setpoint = 70
 
 
 def x_midpoint(a, b):

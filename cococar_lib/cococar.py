@@ -88,6 +88,6 @@ class CocoCar:
             max_speed = self.max_speed
 
         # speed = -speed
-        left = clamp(turn + speed, -max_speed, max_speed)
-        right = clamp(turn - speed, -max_speed, max_speed)
+        left = clamp(float(turn + speed), -max_speed, max_speed)
+        right = clamp(float(turn - speed), -max_speed, max_speed)
         self._drive.set_speed(left, right)
