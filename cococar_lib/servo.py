@@ -1,5 +1,5 @@
 import pigpio
-from utils import clamp, remap_range
+from .utils import clamp, remap_range
 
 
 class Servo:
