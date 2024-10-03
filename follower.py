@@ -14,7 +14,7 @@ distance_setpoint = 70
 camera_fov = 110
 actual_servo_angle = 0
 target_servo_angle = 0
-servo_speed = 60 / 0.15  # degrees per second
+servo_speed = 150  # degrees per second
 
 
 def x_midpoint(a, b):
