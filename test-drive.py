@@ -21,9 +21,6 @@ def update():
     average_x_values = average_x.get_average()
     average_y_values = average_y.get_average()
 
-    # print(f'x: {x:.3f}, y: {y:.3f}')
-    # print(f'left: {car.left_encoder.get_revolutions()}, right: {car.right_encoder.get_revolutions()}')
-
     car.set_drive(average_y_values, average_x_values)
 
 
