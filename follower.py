@@ -1,8 +1,12 @@
 from cococar_lib.utils import PIDController, clamp, remap_range
 from cococar_lib import CocoCar, Servo
 import time
+from data.data_client import DataClient
 
 car = CocoCar()
+data_client = DataClient()
+data_client.connect()
+
 servo_range = 270
 servo = Servo(car.pi, 13, servo_range)
 # speed_pid = PIDController(0.0009, 0, 0.0011)
@@ -94,6 +98,10 @@ def update():
     elif target_servo_angle > actual_servo_angle:
         actual_servo_angle += delta_servo_angle
     actual_servo_angle = clamp(actual_servo_angle, -servo_range / 2, servo_range / 2)
+
+    data_client.publish_data('speed', speed)
+    data_client.publish_data('angle', angle)
+    data_client.publish_data('servo angle', actual_servo_angle)
 
 
 car.set_update_callback(update)
