@@ -48,7 +48,8 @@ def update():
             servo.turn(0)
         speed *= 0.95
         angle *= 0.95
-        if speed != 0: print(f'ArUco marker not detected, slowing speed to {speed}')
+        if speed != 0:
+            print(f'ArUco marker not detected, slowing speed to {speed}')
         car.set_drive(-speed if speed > 0 else 0, angle, max_output)
         speed_pid.get_output(0)
         angle_pid.get_output(0)  # so that derivative is also updating
