@@ -5,7 +5,8 @@ import time
 car = CocoCar()
 servo_range = 270
 servo = Servo(car.pi, 13, servo_range)
-speed_pid = PIDController(0.0009, 0, 0.0011)
+# speed_pid = PIDController(0.0009, 0, 0.0011)
+speed_pid = PIDController(0.01, 0, 0.005)
 angle_servo_pid = PIDController(0.0003, 0, 0.0001)
 angle_pid = PIDController(0.35, 0, 0.07)
 max_output = 0.6
@@ -37,15 +38,17 @@ def update():
     markers = car.camera.detect_aruco_markers()
 
     if len(markers) == 0:
-        if no_detection_count == 20:
+        # if no_detection_count == 20:
+        if speed < 0.08:
             car.set_drive(0, 0)
             speed = 0
             angle = 0
             target_servo_angle = 0
             actual_servo_angle = 0
             servo.turn(0)
-        speed *= 0.975
+        speed *= 0.95
         angle *= 0.95
+        if speed != 0: print(f'ArUco marker not detected, slowing speed to {speed}')
         car.set_drive(-speed if speed > 0 else 0, angle, max_output)
         speed_pid.get_output(0)
         angle_pid.get_output(0)  # so that derivative is also updating
@@ -69,13 +72,15 @@ def update():
 
         distance_error = markers[0]['distance'] - distance_setpoint
 
-        delta_speed = speed_pid.get_output(distance_error)
-        if delta_speed < 0:
-            delta_speed *= 1.65
-        speed += delta_speed
+        # delta_speed = speed_pid.get_output(distance_error)
+        # if delta_speed < 0:
+        #     delta_speed *= 1.65
+        # speed += delta_speed
+        speed = speed_pid.get_output(distance_error)
         speed = clamp(speed, -max_output, max_output)
+        print(speed, distance_error)
         angle = -clamp(angle_pid.get_output(-target_servo_angle), -max_output, max_output)
-        print(target_servo_angle, angle)
+        # print(target_servo_angle, angle)
         if markers[0]['distance'] <= stop_distance:
             car.set_drive(0, angle, max_output)
         else:
