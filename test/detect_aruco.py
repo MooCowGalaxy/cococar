@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import math
 
-display = False
+display = True
 
 
 def detect_aruco_markers(frame):
@@ -70,17 +70,17 @@ if __name__ == "__main__":
         if display:
             for marker in markers:
                 # Draw the marker outline
-                cv2.polylines(frame, [np.int32(marker['corners']) * 3], True, (0, 255, 0), 2)
+                cv2.polylines(frame, [np.int32(marker['corners']) * 3], True, (255, 160, 60), 5)
 
                 # Estimate and display the distance
                 distance = marker['distance']
 
                 # Get the top-left corner of the marker for text placement
-                text_position = tuple(marker['corners'][0].astype(int))
+                text_position = tuple(marker['corners'][0].astype(int) * 3)
 
                 cv2.putText(frame, f"ID: {marker['id']}, Dist: {distance:.2f}in",
                             text_position,
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                            cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 4)
 
             cv2.imshow('ArUco Marker Detection', frame)
 

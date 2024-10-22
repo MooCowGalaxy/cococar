@@ -37,7 +37,7 @@ def update():
     markers = car.camera.detect_aruco_markers()
 
     if len(markers) == 0:
-        if no_detection_count == 20:
+        if no_detection_count == 50:
             car.set_drive(0, 0)
             speed = 0
             angle = 0
@@ -71,7 +71,7 @@ def update():
 
         delta_speed = speed_pid.get_output(distance_error)
         if delta_speed < 0:
-            delta_speed *= 1.65
+            delta_speed *= 1.75
         speed += delta_speed
         speed = clamp(speed, -max_output, max_output)
         angle = -clamp(angle_pid.get_output(-target_servo_angle), -max_output, max_output)

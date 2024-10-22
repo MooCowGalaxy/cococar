@@ -34,8 +34,8 @@ class CarState(Enum):
 class CocoCar:
     def __init__(self, turn_factor=DEFAULT_TURN_FACTOR, max_speed=DEFAULT_MAX_SPEED):
         self.pi = pigpio.pi()
-        # self.left_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[0][0], pin_B=ENCODER_PINS[0][1])
-        # self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
+        self.left_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[0][0], pin_B=ENCODER_PINS[0][1])
+        self.right_encoder = QuadratureEncoder(self.pi, pin_A=ENCODER_PINS[1][0], pin_B=ENCODER_PINS[1][1])
         self.controller = Controller(self.pi, CONTROLLER_INPUT_PINS, MIN_US, MAX_US)
         self.ultrasonic = UltrasonicSensor(ULTRASONIC_PINS[0], ULTRASONIC_PINS[1])
 
